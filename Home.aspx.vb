@@ -71,6 +71,7 @@ Public Class Home
         Dim dt, tbl, tbl1 As New DataTable
 
 
+
         con.Open()
         cmd.CommandType = CommandType.StoredProcedure
         cmd.Parameters.AddWithValue("@id", GridPeople.EditIndex + 1)
@@ -143,21 +144,42 @@ Public Class Home
     Protected Sub OnRowDeleting(ByVal sender As Object, ByVal e As GridViewDeleteEventArgs)
         'כאן נמחוק את השורה
     End Sub
+    'בלחיצה על ערוך בטבלת חברים יפתח לנו טבלה עם פרטים אישיים של אותו שורה
     Protected Sub GridPeople_RowEditing(sender As Object, e As GridViewEditEventArgs)
         GridPeople.EditIndex = e.NewEditIndex
 
         InitGridPersonDetails()
+        'לרשום פה פרוצדורה שיכניס את הערכים המעודכנים למסד נתונים
     End Sub
+    'מחיקת חבר
+    Protected Sub GridPeople_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
+        Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
+        Dim con As New SqlConnection(strConnString)
+        Dim cmd As New SqlCommand("Delete_Person")
+        Dim id, active As Integer
+        id = e.RowIndex + 1
+        active = 0
+        cmd.Connection = con
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.Parameters.AddWithValue("@id", id)
+        cmd.Parameters.AddWithValue("@active", active)
+        Dim da As New SqlDataAdapter(cmd)
+        ' da.SelectCommand = cmd
+
+    End Sub
+    ' עדכון פרטים אישיים
     Protected Sub GridPersonDetails_RowEditing(sender As Object, e As GridViewEditEventArgs)
         GridPersonDetails.EditIndex = e.NewEditIndex
 
 
     End Sub
+    'בלחיצה על הצג יופיע טבלה עם פרטים אישיים
     Protected Sub detail_onclick(sender As Object, e As GridViewRowEventArgs)
         GridPeople.EditIndex = e.Row.RowIndex
 
         InitGridPersonDetails()
     End Sub
+
     Protected Sub GridPeople_RowDataBound(sender As Object, e As GridViewRowEventArgs)
         If e.Row.RowType = DataControlRowType.DataRow AndAlso GridPeople.EditIndex = e.Row.RowIndex Then
             Dim btnddl As HtmlInputButton = CType(e.Row.FindControl("selectWeight"), HtmlInputButton)

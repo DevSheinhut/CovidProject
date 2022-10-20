@@ -3,26 +3,23 @@
 }
 
 .btnList {
-    
-   
     opacity: 1;
     text-align: center;
     font: Bold 20px/29px Assistant;
     letter-spacing: 0;
-    
+    color: #102C2F;
     border-style: none;
     height: 40px;
     margin-top: 8%;
 }
 .divGridPeople {
-    
     direction: rtl;
     text-align: right;
     overflow: auto;
-    max-height: 50.5%;
+    max-height: 71.5%;
     margin-top: 6%;
     margin-right: 8%;
-   /* width: 18%;*/
+    /* width: 18%;*/
 }
 
 
@@ -34,9 +31,21 @@
     width: 90%;
     height: 580px;
     direction: rtl;
+    font-family: Assistant;
+
 }
 .DivGridPersonDetails {
     margin-right: 10%;
     margin-top: 6%;
     width: 60%;
+}
+#GridPersonDetails td, #GridPeople td, #GridPersonDetails th, #GridPeople td {
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+.txt {
+    padding-top: 2%;
+    text-align: right;
+    font: bold 25px/27px Assistant;
 }
