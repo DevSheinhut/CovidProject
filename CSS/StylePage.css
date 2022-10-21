@@ -49,3 +49,6 @@
     text-align: right;
     font: bold 25px/27px Assistant;
 }
+#GridPersonDetails a, #GridPeople a {
+    color: #102C2F;
+}

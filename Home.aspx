@@ -35,7 +35,9 @@
 
             <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
                 <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
-                     OnRowEditing="GridPersonDetails_RowEditing"
+                    OnRowCancelingEdit="GridPersonDetails_RowCancelingEdit"
+                    OnRowEditing="GridPersonDetails_RowEditing"
+                     OnRowUpdating="GridPersonDetails_RowUpdating"
                     AutoGenerateEditButton="false"
                     Width="100%">
                      <HeaderStyle Height="40px" />

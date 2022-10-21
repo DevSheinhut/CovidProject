@@ -167,9 +167,37 @@ Public Class Home
         ' da.SelectCommand = cmd
 
     End Sub
-    ' עדכון פרטים אישיים
+    ' עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowEditing(sender As Object, e As GridViewEditEventArgs)
         GridPersonDetails.EditIndex = e.NewEditIndex
+
+
+    End Sub
+    'ביטול עריכת פרטים אישיים
+    Protected Sub GridPersonDetails_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
+        GridPersonDetails.EditIndex = -1
+        InitGridPersonDetails()
+    End Sub
+    'עדכון עריכת פרטים אישיים
+    Protected Sub GridPersonDetails_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
+        Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
+        Dim con As New SqlConnection(strConnString)
+        Dim cmd As New SqlCommand("Update_Person")
+        Dim row As GridViewRow = GridPersonDetails.Rows(e.RowIndex)
+
+
+        Dim newName_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("nameC"), System.Web.UI.WebControls.TextBox)
+        If newName_txt.Text = "" Then
+            GridPersonDetails.EditIndex = -1
+            InitGridPersonDetails()
+            Exit Sub
+        End If
+        Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
+        cmd.Connection = con
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.Parameters.AddWithValue("@id", row)
+        GridPersonDetails.EditIndex = -1
+        InitGridPersonDetails()
 
 
     End Sub
