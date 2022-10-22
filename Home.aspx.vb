@@ -13,7 +13,7 @@ Public Class Home
         Dim con As New SqlConnection(strConnString)
         Dim cmd As New SqlCommand("GetAllManList", con)
         Dim da As New SqlDataAdapter()
-        Dim ds As DataSet
+
         Dim dt, tbl, tbl1 As New DataTable
 
 
@@ -35,7 +35,7 @@ Public Class Home
             NEW_col = New DataColumn
             grid_people.Columns.Add(NEW_col)
         Next
-        grid_people.Columns(0).ColumnName = "הצג"
+        grid_people.Columns(0).ColumnName = "ID"
         grid_people.Columns(1).ColumnName = "שם"
         grid_people.Columns(2).ColumnName = "משפחה"
         grid_people.Columns(3).ColumnName = "ת.ז."
@@ -48,6 +48,7 @@ Public Class Home
             For index = 0 To tbl.Rows.Count - 1
                 NEW_ROW = grid_people.NewRow()
                 grid_people.Rows.Add(NEW_ROW)
+                grid_people.Rows(index)(0) = tbl.Rows(index)("id")
                 grid_people.Rows(index)(1) = tbl.Rows(index)("first_name")
                 grid_people.Rows(index)(2) = tbl.Rows(index)("last_name")
                 grid_people.Rows(index)(3) = tbl.Rows(index)("identification")
@@ -55,11 +56,20 @@ Public Class Home
 
             Next
         End If
-
+        grid_people.Columns.Add("הצג")
         GridPeople.DataSource = grid_people
-
         GridPeople.DataBind()
+        GridPeople.HeaderRow.Cells(2).Visible = False
+        For i As Integer = 0 To GridPeople.Rows.Count - 1
 
+            GridPeople.Rows(i).Cells(2).Visible = False
+
+            Dim f As New System.Web.UI.WebControls.ImageButton
+            f.ImageUrl = "~/Images/ViewPerson.PNG"
+            f.Attributes.Add("title", "פרטים נוספים")
+            f.Attributes.Add("onclick", "InitGridPersonDetails()")
+            GridPeople.Rows(i).Cells(6).Controls.Add(f)
+        Next
     End Sub
     Private Sub InitGridPersonDetails()
         ' GridPeople.Visible = True
@@ -67,7 +77,7 @@ Public Class Home
         Dim con As New SqlConnection(strConnString)
         Dim cmd As New SqlCommand("Get_Man_Detail_By_Id", con)
         Dim da As New SqlDataAdapter()
-        Dim ds As DataSet
+
         Dim dt, tbl, tbl1 As New DataTable
 
 
@@ -186,13 +196,14 @@ Public Class Home
         Dim row As GridViewRow = GridPersonDetails.Rows(e.RowIndex)
 
 
-        Dim newName_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("nameC"), System.Web.UI.WebControls.TextBox)
-        If newName_txt.Text = "" Then
-            GridPersonDetails.EditIndex = -1
-            InitGridPersonDetails()
+        Dim newFname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("FnameC"), System.Web.UI.WebControls.TextBox)
+        Dim newLname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("LnameC"), System.Web.UI.WebControls.TextBox)
+        Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
+        If newFname_txt.Text = "" Or newLname_txt.Text = "" Then
+            msg.Visible = True
             Exit Sub
         End If
-        Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
+        msg.Visible = False
         cmd.Connection = con
         cmd.CommandType = CommandType.StoredProcedure
         cmd.Parameters.AddWithValue("@id", row)
@@ -209,19 +220,43 @@ Public Class Home
     End Sub
 
     Protected Sub GridPeople_RowDataBound(sender As Object, e As GridViewRowEventArgs)
-        If e.Row.RowType = DataControlRowType.DataRow AndAlso GridPeople.EditIndex = e.Row.RowIndex Then
-            Dim btnddl As HtmlInputButton = CType(e.Row.FindControl("selectWeight"), HtmlInputButton)
+        'If e.Row.RowType = DataControlRowType.DataRow AndAlso GridPeople.EditIndex = e.Row.RowIndex Then
+        '    Dim btnddl As HtmlInputButton = CType(e.Row.FindControl("selectWeight"), HtmlInputButton)
+
+        'End If
+
+        'If e.Row.RowType = DataControlRowType.DataRow Then
+        '    e.Row.Cells(0).Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(GridPeople, "Select$" & e.Row.RowIndex)
+        '    e.Row.Cells(0).ToolTip = "Click to select this row."
+        '    e.Row.Cells(0).CssClass = "pointer"
+        '    ' e.Row.Cells(1).Text = "<a style=""cursor:pointer"" >" + "מחק" + "</a>"
+        '    ' e.Row.Cells(2).Text = "<a style=""cursor:pointer"" >" + "הצג" + "</a>"
+        '    ' e.Row.Cells(6).Text = "<a style=""cursor:pointer"" onclick=""showConfirm1(" + e.Row.RowIndex.ToString + ")"">" + "מחק" + "</a>"
+
+        'End If
+    End Sub
+    'הוספת חבר חדש
+    Public Sub btnAddPerson_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        DivAddPerson.Visible = True
+        btnAdd.Visible = False
+    End Sub
+    Public Sub updatePerson_Click(sender As Object, e As EventArgs)
+
+        If txtFname.Value = "" Or txtLname.Value = "" Or txtId.Value = "" Then
+            msg.Visible = True
+            Exit Sub
+        Else
+            'להכניס לDB
+
 
         End If
+        msg.Visible = False
+        btnViewListPeople_Click(sender, e)
+        txtFname.Value = ""
+        txtLname.Value = ""
+        txtId.Value = ""
+        DivAddPerson.Visible = False
+        btnAdd.Visible = True
 
-        If e.Row.RowType = DataControlRowType.DataRow Then
-            e.Row.Cells(0).Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(GridPeople, "Select$" & e.Row.RowIndex)
-            e.Row.Cells(0).ToolTip = "Click to select this row."
-            e.Row.Cells(0).CssClass = "pointer"
-            ' e.Row.Cells(1).Text = "<a style=""cursor:pointer"" >" + "מחק" + "</a>"
-            e.Row.Cells(2).Text = "<a style=""cursor:pointer"" >" + "הצג" + "</a>"
-            ' e.Row.Cells(6).Text = "<a style=""cursor:pointer"" onclick=""showConfirm1(" + e.Row.RowIndex.ToString + ")"">" + "מחק" + "</a>"
-
-        End If
     End Sub
 End Class

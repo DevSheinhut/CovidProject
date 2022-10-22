@@ -6,15 +6,41 @@
 <head runat="server">
     <link href="CSS/StylePage.css" rel="stylesheet" />
     <title class="title">ברוכים הבאים לקופת חולים..</title>
+    <script type="text/javascript">
+        function detail_onclick(row) {
+            debugger;
+            window.open("manDetail.aspx")
+
+        }
+
+
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="mainDiv" >
            <div class="txt">קופת חולים ברוכים הבאים</div>
-            <div style="display: flex">
-            <div class="divGridPeople" id="divGridPeople" runat="server">
-                <asp:LinkButton ID="btnViewListPeople" Class="btnList" runat="server" OnClick="btnViewListPeople_Click" Text="רשימת החברים"></asp:LinkButton>
-               
+             <div style="display: flex"" >
+                  <asp:LinkButton ID="btnAdd" Class="btnLink" runat="server" OnClick="btnAddPerson_Click" Text="הוספת חבר"></asp:LinkButton> 
+            <div class="addPerson" id="DivAddPerson" style="display: flex; margin-top: 8px;" Visible="false" runat="server">
+                <div class="txtOutpot">שם</div>&nbsp;
+            <input type="text" id="txtFname" class="txtinput" style="margin-top: -9px;" maxlength="60" runat="server" autocomplete="off" />
+             &nbsp;	&nbsp;	
+                <div class="txtOutpot">משפחה</div>&nbsp;
+            <input type="text" id="txtLname" class="txtinput" style="margin-top: -9px;" maxlength="60" runat="server" autocomplete="off" />
+             &nbsp;	&nbsp;
+                <div class="txtOutpot">ת.ז.</div>&nbsp;
+            <input type="text" id="txtId" class="txtinput" style="margin-top: -9px;" maxlength="60" runat="server" autocomplete="off" />
+             &nbsp;	&nbsp;
+                  <asp:Button ID="updatePerson" Text="הוספה" runat="server" OnClick="updatePerson_Click" />
+            </div>
+                 </div>
+            <div id="msg" style="color:red;" runat="server" visible="false">נא למלאות את כל הנתונים</div>
+           
+           
+              <asp:LinkButton ID="btnViewListPeople" Class="btnLink" runat="server" OnClick="btnViewListPeople_Click" Text="רשימת החברים"></asp:LinkButton>  
+             <div style="display: flex">
+                <div class="divGridPeople" id="divGridPeople" runat="server">
                 <asp:GridView ID="GridPeople" Visible="false" Style="width: 100%;" runat="server" 
                     
                     OnRowEditing="GridPeople_RowEditing"
@@ -33,7 +59,8 @@
 
             </div>
 
-            <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
+            
+                <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
                 <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
                     OnRowCancelingEdit="GridPersonDetails_RowCancelingEdit"
                     OnRowEditing="GridPersonDetails_RowEditing"

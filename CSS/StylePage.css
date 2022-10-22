@@ -2,7 +2,7 @@
     color: red;
 }
 
-.btnList {
+.btnLink {
     opacity: 1;
     text-align: center;
     font: Bold 20px/29px Assistant;
@@ -10,14 +10,15 @@
     color: #102C2F;
     border-style: none;
     height: 40px;
-    margin-top: 8%;
+    text-decoration: none;
+    margin-right: 4%;
 }
 .divGridPeople {
     direction: rtl;
     text-align: right;
     overflow: auto;
     max-height: 71.5%;
-    margin-top: 6%;
+    margin-top: 1%;
     margin-right: 8%;
     /* width: 18%;*/
 }
@@ -32,6 +33,7 @@
     height: 580px;
     direction: rtl;
     font-family: Assistant;
+        direction: rtl;
 
 }
 .DivGridPersonDetails {
@@ -45,10 +47,39 @@
     font-size: 16px;
 }
 .txt {
-    padding-top: 2%;
-    text-align: right;
+    margin: 2%;
+    text-align: center;
     font: bold 25px/27px Assistant;
 }
 #GridPersonDetails a, #GridPeople a {
     color: #102C2F;
+}
+.txtOutpot {
+    text-align: right;
+    font: bold 18px/20px Assistant;
+    letter-spacing: 0;
+    color: #102C2F;
+    opacity: 1;
+}
+
+.txtinput {
+    width: 268px;
+    height: 40px;
+    border: 0.5px solid #707070;
+    opacity: 1;
+}
+.addPerson{
+    margin-right: 4%;
+}
+#updatePerson {
+    background: red;
+    opacity: 1;
+    text-align: center;
+    font: Bold 20px/29px Assistant;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    border-style: none;
+    /* width: 8%; */
+    height: 40px;
+    margin-top: -8px;
 }

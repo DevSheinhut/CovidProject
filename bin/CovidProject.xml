@@ -492,9 +492,63 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:CovidProject.Home._divGridPeople">
+<member name="F:CovidProject.Home._btnAdd">
 <summary>
-divGridPeople control.
+btnAdd control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._DivAddPerson">
+<summary>
+DivAddPerson control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._txtFname">
+<summary>
+txtFname control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._txtLname">
+<summary>
+txtLname control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._txtId">
+<summary>
+txtId control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._updatePerson">
+<summary>
+updatePerson control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._msg">
+<summary>
+msg control.
 </summary>
 <remarks>
 Auto-generated field.
@@ -504,6 +558,15 @@ To modify move field declaration from designer file to code-behind file.
 <member name="F:CovidProject.Home._btnViewListPeople">
 <summary>
 btnViewListPeople control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._divGridPeople">
+<summary>
+divGridPeople control.
 </summary>
 <remarks>
 Auto-generated field.
@@ -531,6 +594,15 @@ To modify move field declaration from designer file to code-behind file.
 <member name="F:CovidProject.Home._GridPersonDetails">
 <summary>
 GridPersonDetails control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.manDetail._form1">
+<summary>
+form1 control.
 </summary>
 <remarks>
 Auto-generated field.

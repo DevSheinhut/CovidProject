@@ -23,13 +23,67 @@ Partial Public Class Home
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''divGridPeople control.
+    '''btnAdd control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents divGridPeople As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    Protected WithEvents btnAdd As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''DivAddPerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DivAddPerson As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''txtFname control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtFname As Global.System.Web.UI.HtmlControls.HtmlInputText
+
+    '''<summary>
+    '''txtLname control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtLname As Global.System.Web.UI.HtmlControls.HtmlInputText
+
+    '''<summary>
+    '''txtId control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtId As Global.System.Web.UI.HtmlControls.HtmlInputText
+
+    '''<summary>
+    '''updatePerson control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents updatePerson As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''msg control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents msg As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''btnViewListPeople control.
@@ -39,6 +93,15 @@ Partial Public Class Home
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents btnViewListPeople As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''divGridPeople control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents divGridPeople As Global.System.Web.UI.HtmlControls.HtmlGenericControl
 
     '''<summary>
     '''GridPeople control.
