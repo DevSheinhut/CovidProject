@@ -582,18 +582,18 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:CovidProject.Home._btnDetail">
+<member name="F:CovidProject.Home._divPersonDetails">
 <summary>
-btnDetail control.
+divPersonDetails control.
 </summary>
 <remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:CovidProject.Home._divPersonDetails">
+<member name="F:CovidProject.Home._closeViewDeatails">
 <summary>
-divPersonDetails control.
+closeViewDeatails control.
 </summary>
 <remarks>
 Auto-generated field.

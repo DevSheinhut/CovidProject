@@ -8,9 +8,9 @@
     <title class="title">ברוכים הבאים לקופת חולים..</title>
     <script type="text/javascript">
         function detail_onclick(row) {
-            debugger;
-            GridPeople.EditIndex = row.id
-            document.getElementById("btnDetail").click();
+            //debugger;
+            //GridPeople.EditIndex = row.id
+            //document.getElementById("btnDetail").click();
 
         }
 
@@ -22,8 +22,8 @@
         <div class="mainDiv" >
            <div class="txt">קופת חולים ברוכים הבאים</div>
              <div style="display: flex"" >
-                  <asp:LinkButton ID="btnAdd" Class="btnLink" runat="server" OnClick="btnAddPerson_Click" Text="הוספת חבר"></asp:LinkButton> 
-            <div class="addPerson" id="DivAddPerson" style="display: flex; margin-top: 8px;" Visible="false" runat="server">
+                  <asp:LinkButton ID="btnAdd" Class="btnLink" runat="server" Visible="false" OnClick="btnAddPerson_Click" Text="הוספת חבר"></asp:LinkButton> 
+            <div class="addPerson" id="DivAddPerson" style="display: flex; margin-top: 8px;"  runat="server">
                 <div class="txtOutpot">שם</div>&nbsp;
             <input type="text" id="txtFname" class="txtinput" style="margin-top: -9px;" maxlength="60" runat="server" autocomplete="off" />
              &nbsp;	&nbsp;	
@@ -53,15 +53,24 @@
                     <HeaderStyle Height="40px" />
                     <RowStyle Height="40px" />
                     <Columns>
-                        <asp:CommandField  ShowEditButton="True" ButtonType="Link" EditText="ערוך" HeaderText="ערוך" />
+
+                         <asp:TemplateField HeaderText="הצג">
+                <ItemTemplate>
+                    <asp:LinkButton ID="viewDetails" runat="server" Text="הצג"
+                        CommandName="View" OnCommand="View_Command" CommandArgument='<%# Eval("ID").ToString()%>' OnClientClick='detail_onclick()'></asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+                       
                         <asp:CommandField  ShowDeleteButton="True" ButtonType="Link" DeleteText="מחק" HeaderText="מחק" />
                     </Columns>
                 </asp:GridView>
 
             </div>
 
-            <input style="visibility:hidden" id="btnDetail" runat="server" onserverclick="detail_onclick" type="button"/>
+           <%-- <input style="visibility:hidden" id="btnDetail" runat="server" onserverclick="detail_onclick" type="button"/>--%>
+                 
                 <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
+                     <asp:LinkButton ID="closeViewDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="closeViewDeatails_Click" Text="סגור פרטים נוספים"></asp:LinkButton>
                 <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
                     OnRowCancelingEdit="GridPersonDetails_RowCancelingEdit"
                     OnRowEditing="GridPersonDetails_RowEditing"

@@ -113,15 +113,6 @@ Partial Public Class Home
     Protected WithEvents GridPeople As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
-    '''btnDetail control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnDetail As Global.System.Web.UI.HtmlControls.HtmlInputButton
-
-    '''<summary>
     '''divPersonDetails control.
     '''</summary>
     '''<remarks>
@@ -129,6 +120,15 @@ Partial Public Class Home
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents divPersonDetails As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
+    '''closeViewDeatails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents closeViewDeatails As Global.System.Web.UI.WebControls.LinkButton
 
     '''<summary>
     '''GridPersonDetails control.

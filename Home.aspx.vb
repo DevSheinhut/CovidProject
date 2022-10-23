@@ -56,22 +56,22 @@ Public Class Home
 
             Next
         End If
-        grid_people.Columns.Add("הצג")
+        'grid_people.Columns.Add("הצג")
         ViewState("CurrentTable") = grid_people
         GridPeople.DataSource = grid_people
         GridPeople.DataBind()
         GridPeople.HeaderRow.Cells(2).Visible = False
         Dim Row As Integer
         For i As Integer = 0 To GridPeople.Rows.Count - 1
-            Row = grid_people.Rows(i)("id")
+            '    Row = grid_people.Rows(i)("id")
             GridPeople.Rows(i).Cells(2).Visible = False
 
-            Dim f As New System.Web.UI.WebControls.ImageButton
-            f.ImageUrl = "~/Images/ViewPerson.PNG"
-            f.Attributes.Add("title", "פרטים נוספים")
-            f.Attributes.Add("id", Row)
-            f.Attributes.Add("onclick", "detail_onclick(this)")
-            GridPeople.Rows(i).Cells(6).Controls.Add(f)
+            '    Dim f As New System.Web.UI.WebControls.ImageButton
+            '    f.ImageUrl = "~/Images/ViewPerson.PNG"
+            '    f.Attributes.Add("title", "פרטים נוספים")
+            '    f.Attributes.Add("id", Row)
+            '    f.Attributes.Add("onclick", "detail_onclick(this)")
+            '    GridPeople.Rows(i).Cells(6).Controls.Add(f)
         Next
     End Sub
     Private Sub InitGridPersonDetails()
@@ -87,7 +87,7 @@ Public Class Home
 
         con.Open()
         cmd.CommandType = CommandType.StoredProcedure
-        cmd.Parameters.AddWithValue("@id", GridPeople.EditIndex)
+        cmd.Parameters.AddWithValue("@id", GridPersonDetails.EditIndex)
         da.SelectCommand = cmd
         dt.Clear()
         da.Fill(dt)
@@ -160,6 +160,7 @@ Public Class Home
 
         Next
         GridPersonDetails.Visible = True
+        closeViewDeatails.Visible = True
 
     End Sub
 
@@ -212,13 +213,13 @@ Public Class Home
         Dim row As GridViewRow = GridPersonDetails.Rows(e.RowIndex)
 
 
-        Dim newFname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("FnameC"), System.Web.UI.WebControls.TextBox)
-        Dim newLname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("LnameC"), System.Web.UI.WebControls.TextBox)
-        Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
-        If newFname_txt.Text = "" Or newLname_txt.Text = "" Then
-            msg.Visible = True
-            Exit Sub
-        End If
+        'Dim newFname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("FnameC"), System.Web.UI.WebControls.TextBox)
+        'Dim newLname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("LnameC"), System.Web.UI.WebControls.TextBox)
+        'Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
+        'If newFname_txt.Text = "" Or newLname_txt.Text = "" Then
+        '    msg.Visible = True
+        '    Exit Sub
+        'End If
         msg.Visible = False
         cmd.Connection = con
         cmd.CommandType = CommandType.StoredProcedure
@@ -229,12 +230,12 @@ Public Class Home
 
     End Sub
     'בלחיצה על הצג יופיע טבלה עם פרטים אישיים
-    Public Sub detail_onclick()
-        'GridPeople.EditIndex = e.Row.RowIndex
+    Protected Sub View_Command(sender As Object, e As CommandEventArgs)
+        GridPersonDetails.EditIndex = e.CommandArgument
 
         InitGridPersonDetails()
-    End Sub
 
+    End Sub
     Protected Sub GridPeople_RowDataBound(sender As Object, e As GridViewRowEventArgs)
         'If e.Row.RowType = DataControlRowType.DataRow AndAlso GridPeople.EditIndex = e.Row.RowIndex Then
         '    Dim btnddl As HtmlInputButton = CType(e.Row.FindControl("selectWeight"), HtmlInputButton)
@@ -296,4 +297,11 @@ Public Class Home
         btnAdd.Visible = True
 
     End Sub
+    'סגירת חלון פרטים נוספים
+    Public Sub closeViewDeatails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        GridPersonDetails.EditIndex = -1
+        GridPersonDetails.Visible = False
+        closeViewDeatails.Visible = False
+    End Sub
+
 End Class
