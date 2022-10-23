@@ -17,10 +17,11 @@
     direction: rtl;
     text-align: right;
     overflow: auto;
-    max-height: 71.5%;
+    /*max-height: 71.5%;*/
     margin-top: 1%;
-    margin-right: 8%;
-    /* width: 18%;*/
+    margin-right: 4%;
+    /* width: 18%; */
+    /*height: 6%;*/
 }
 
 

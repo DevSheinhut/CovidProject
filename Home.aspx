@@ -9,7 +9,8 @@
     <script type="text/javascript">
         function detail_onclick(row) {
             debugger;
-            window.open("manDetail.aspx")
+            GridPeople.EditIndex = row.id
+            document.getElementById("btnDetail").click();
 
         }
 
@@ -39,7 +40,7 @@
            
            
               <asp:LinkButton ID="btnViewListPeople" Class="btnLink" runat="server" OnClick="btnViewListPeople_Click" Text="רשימת החברים"></asp:LinkButton>  
-             <div style="display: flex">
+             <div style="display: flex; max-height: 67%;">
                 <div class="divGridPeople" id="divGridPeople" runat="server">
                 <asp:GridView ID="GridPeople" Visible="false" Style="width: 100%;" runat="server" 
                     
@@ -59,7 +60,7 @@
 
             </div>
 
-            
+            <input style="visibility:hidden" id="btnDetail" runat="server" onserverclick="detail_onclick" type="button"/>
                 <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
                 <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
                     OnRowCancelingEdit="GridPersonDetails_RowCancelingEdit"
