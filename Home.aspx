@@ -21,7 +21,7 @@
     <form id="form1" runat="server">
         <div class="mainDiv" >
            <div class="txt">קופת חולים ברוכים הבאים</div>
-             <div style="display: flex"" >
+             <div style="display: flex" >
                   <asp:LinkButton ID="btnAdd" Class="btnLink" runat="server" Visible="false" OnClick="btnAddPerson_Click" Text="הוספת חבר"></asp:LinkButton> 
             <div class="addPerson" id="DivAddPerson" style="display: flex; margin-top: 8px;"  runat="server">
                 <div class="txtOutpot">שם</div>&nbsp;
@@ -69,9 +69,9 @@
 
            <%-- <input style="visibility:hidden" id="btnDetail" runat="server" onserverclick="detail_onclick" type="button"/>--%>
                  
-                <div class="DivGridPersonDetails" id="divPersonDetails" runat="server" visible="true">
+                <div class="DivGridPersonDetails"  id="divPersonDetails" runat="server" visible="true">
                      <asp:LinkButton ID="closeViewDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="closeViewDeatails_Click" Text="סגור פרטים נוספים"></asp:LinkButton>
-                <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
+                 <asp:GridView ID="GridPersonDetails" Visible="false" Style="width: 100%;" runat="server"
                     OnRowCancelingEdit="GridPersonDetails_RowCancelingEdit"
                     OnRowEditing="GridPersonDetails_RowEditing"
                      OnRowUpdating="GridPersonDetails_RowUpdating"
@@ -81,9 +81,25 @@
                     <RowStyle Height="40px" />
                     <Columns>
                         <asp:CommandField  ShowEditButton="True" ButtonType="Link" EditText="ערוך" HeaderText="ערוך" />
+                    </Columns>
+                 </asp:GridView>
+                   <br /> <br />
+                 <asp:LinkButton ID="closeViewCovidDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="closeViewCovidDeatails_Click" Text="סגור פרטי קורונה"></asp:LinkButton>
+                     <asp:LinkButton ID="openViewCovidDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="openViewCovidDeatails_Click" Text="פתיחת פרטי קורונה"></asp:LinkButton>       
+                <asp:GridView class="DivGridCovidDetails" ID="GridCovidDetails" Visible="false" Style="width: 100%;" runat="server"
+                    OnRowCancelingEdit="GridCovidDetails_RowCancelingEdit"
+                    OnRowEditing="GridCovidDetails_RowEditing"
+                     OnRowUpdating="GridCovidDetails_RowUpdating"
+                    AutoGenerateEditButton="false"
+                    Width="100%">
+                     <HeaderStyle Height="40px" />
+                    <RowStyle Height="40px" />
+                    <Columns>
+                        <asp:CommandField  ShowEditButton="True" ButtonType="Link" EditText="ערוך" HeaderText="ערוך" />
                         
                     </Columns>
                 </asp:GridView>
+
             </div>
                 </div>
         </div>

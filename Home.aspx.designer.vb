@@ -138,4 +138,31 @@ Partial Public Class Home
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents GridPersonDetails As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''closeViewCovidDeatails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents closeViewCovidDeatails As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''openViewCovidDeatails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents openViewCovidDeatails As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''GridCovidDetails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents GridCovidDetails As Global.System.Web.UI.WebControls.GridView
 End Class

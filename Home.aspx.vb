@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Web.Configuration
 
+
 Public Class Home
     Inherits System.Web.UI.Page
 
@@ -8,6 +9,10 @@ Public Class Home
 
     End Sub
     Public Sub btnViewListPeople_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        If GridPeople.Visible = True Then
+            GridPeople.Visible = False
+            Exit Sub
+        End If
         GridPeople.Visible = True
         Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
         Dim con As New SqlConnection(strConnString)
@@ -93,6 +98,7 @@ Public Class Home
         da.Fill(dt)
 
         Dim grid_people As DataTable = New DataTable()
+        Dim grid_covid As DataTable = New DataTable()
         Dim NEW_ROW As DataRow
         Dim NEW_col As DataColumn
 
@@ -101,7 +107,7 @@ Public Class Home
         '    NEW_ROW = grid_people.NewRow
         '    grid_people.Rows.Add(NEW_ROW)
         'Next
-
+        ' טבלת פרטים אישיים
         For index As Integer = 0 To 13
             NEW_col = New DataColumn
             grid_people.Columns.Add(NEW_col)
@@ -126,8 +132,8 @@ Public Class Home
         tbl = dt
         If tbl.Rows.Count > 0 Then
 
-            For index = 0 To tbl.Rows.Count - 1
-                NEW_ROW = grid_people.NewRow()
+            Dim index = 0
+            NEW_ROW = grid_people.NewRow()
                 grid_people.Rows.Add(NEW_ROW)
                 grid_people.Rows(index)(0) = tbl.Rows(index)("id")
                 grid_people.Rows(index)(1) = tbl.Rows(index)("person_id")
@@ -144,7 +150,7 @@ Public Class Home
                 grid_people.Rows(index)(12) = tbl.Rows(index)("date_positive")
                 grid_people.Rows(index)(13) = tbl.Rows(index)("date_recovery")
 
-            Next
+
         End If
 
         GridPersonDetails.DataSource = grid_people
@@ -152,19 +158,78 @@ Public Class Home
         GridPersonDetails.DataBind()
         GridPersonDetails.HeaderRow.Cells(1).Visible = False
         GridPersonDetails.HeaderRow.Cells(2).Visible = False
+        GridPersonDetails.HeaderRow.Cells(10).Visible = False
+        GridPersonDetails.HeaderRow.Cells(11).Visible = False
+        GridPersonDetails.HeaderRow.Cells(12).Visible = False
 
         For i As Integer = 0 To GridPersonDetails.Rows.Count - 1
-
             GridPersonDetails.Rows(i).Cells(1).Visible = False
             GridPersonDetails.Rows(i).Cells(2).Visible = False
-
+            GridPersonDetails.Rows(i).Cells(10).Visible = False
+            GridPersonDetails.Rows(i).Cells(11).Visible = False
+            GridPersonDetails.Rows(i).Cells(12).Visible = False
         Next
+        'For i As Integer = 1 To GridPersonDetails.Rows.Count - 1
+        '    For j As Integer = 0 To 14
+        '        GridPersonDetails.Rows(i).Cells(j).Visible = False
+
+        '    Next
+        'Next
         GridPersonDetails.Visible = True
+
         closeViewDeatails.Visible = True
 
+        'טבלת פרטי קורונה
+        For index As Integer = 0 To 5
+            NEW_col = New DataColumn
+            grid_covid.Columns.Add(NEW_col)
+        Next
+
+
+        grid_covid.Columns(0).ColumnName = "person_id"
+        grid_covid.Columns(1).ColumnName = "חיסון"
+        grid_covid.Columns(2).ColumnName = "תאריך"
+        grid_covid.Columns(3).ColumnName = "יצרן"
+        grid_covid.Columns(4).ColumnName = "ת.חיובי"
+        grid_covid.Columns(5).ColumnName = "ת.החלמה"
+
+
+        tbl = dt
+        If tbl.Rows.Count > 0 Then
+
+            For index = 0 To tbl.Rows.Count - 1
+                NEW_ROW = grid_covid.NewRow()
+                grid_covid.Rows.Add(NEW_ROW)
+                grid_covid.Rows(index)(0) = tbl.Rows(index)("person_id")
+                grid_covid.Rows(index)(1) = tbl.Rows(index)("חיסון")
+                grid_covid.Rows(index)(2) = tbl.Rows(index)("תאריך")
+                grid_covid.Rows(index)(3) = tbl.Rows(index)("יצרן")
+                grid_covid.Rows(index)(4) = tbl.Rows(index)("date_positive")
+                grid_covid.Rows(index)(5) = tbl.Rows(index)("date_recovery")
+
+            Next
+        End If
+
+        GridCovidDetails.DataSource = grid_covid
+
+        GridCovidDetails.DataBind()
+        GridCovidDetails.HeaderRow.Cells(1).Visible = False
+        GridCovidDetails.HeaderRow.Cells(5).Visible = False
+        GridCovidDetails.HeaderRow.Cells(6).Visible = False
+
+        For i As Integer = 0 To GridCovidDetails.Rows.Count - 1
+
+            GridCovidDetails.Rows(i).Cells(1).Visible = False
+            GridCovidDetails.Rows(i).Cells(5).Visible = False
+            GridCovidDetails.Rows(i).Cells(6).Visible = False
+
+        Next
+        GridCovidDetails.Visible = True
+
+        closeViewCovidDeatails.Visible = True
     End Sub
 
-    'בלחיצה על ערוך בטבלת חברים יפתח לנו טבלה עם פרטים אישיים של אותו שורה
+    'לא בשימוש היה עבור ערוך בטבלת חברים
     Protected Sub GridPeople_RowEditing(sender As Object, e As GridViewEditEventArgs)
         Dim dtCurrentTable As DataTable = ViewState("CurrentTable")
         GridPeople.EditIndex = dtCurrentTable.Rows(e.NewEditIndex)("ID")
@@ -202,8 +267,10 @@ Public Class Home
     End Sub
     'ביטול עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
+
         GridPersonDetails.EditIndex = -1
         InitGridPersonDetails()
+        'GridPersonDetails.EditIndex = -1
     End Sub
     'עדכון עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
@@ -212,19 +279,38 @@ Public Class Home
         Dim cmd As New SqlCommand("Update_Person")
         Dim row As GridViewRow = GridPersonDetails.Rows(e.RowIndex)
 
-
-        'Dim newFname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("FnameC"), System.Web.UI.WebControls.TextBox)
-        'Dim newLname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("LnameC"), System.Web.UI.WebControls.TextBox)
-        'Dim person_id As System.Web.UI.WebControls.TextBox = CType(row.FindControl("IDC"), System.Web.UI.WebControls.TextBox)
-        'If newFname_txt.Text = "" Or newLname_txt.Text = "" Then
-        '    msg.Visible = True
-        '    Exit Sub
-        'End If
         msg.Visible = False
         cmd.Connection = con
         cmd.CommandType = CommandType.StoredProcedure
         cmd.Parameters.AddWithValue("@id", row)
         GridPersonDetails.EditIndex = -1
+        InitGridPersonDetails()
+
+
+    End Sub
+    ' עריכת פרטי קורונה
+    Protected Sub GridCovidDetails_RowEditing(sender As Object, e As GridViewEditEventArgs)
+        GridCovidDetails.EditIndex = e.NewEditIndex
+
+
+    End Sub
+    'ביטול עריכת פרטי קורונה
+    Protected Sub GridCovidDetails_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
+        GridCovidDetails.EditIndex = -1
+        InitGridPersonDetails()
+    End Sub
+    'עדכון עריכת פרטי קורנה
+    Protected Sub GridCovidDetails_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
+        Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
+        Dim con As New SqlConnection(strConnString)
+        Dim cmd As New SqlCommand("Update_Person")
+        Dim row As GridViewRow = GridCovidDetails.Rows(e.RowIndex)
+
+        msg.Visible = False
+        cmd.Connection = con
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.Parameters.AddWithValue("@id", row)
+        GridCovidDetails.EditIndex = -1
         InitGridPersonDetails()
 
 
@@ -237,26 +323,14 @@ Public Class Home
 
     End Sub
     Protected Sub GridPeople_RowDataBound(sender As Object, e As GridViewRowEventArgs)
-        'If e.Row.RowType = DataControlRowType.DataRow AndAlso GridPeople.EditIndex = e.Row.RowIndex Then
-        '    Dim btnddl As HtmlInputButton = CType(e.Row.FindControl("selectWeight"), HtmlInputButton)
 
-        'End If
-
-        'If e.Row.RowType = DataControlRowType.DataRow Then
-        '    e.Row.Cells(0).Attributes("onclick") = Page.ClientScript.GetPostBackClientHyperlink(GridPeople, "Select$" & e.Row.RowIndex)
-        '    e.Row.Cells(0).ToolTip = "Click to select this row."
-        '    e.Row.Cells(0).CssClass = "pointer"
-        '    ' e.Row.Cells(1).Text = "<a style=""cursor:pointer"" >" + "מחק" + "</a>"
-        '    ' e.Row.Cells(2).Text = "<a style=""cursor:pointer"" >" + "הצג" + "</a>"
-        '    ' e.Row.Cells(6).Text = "<a style=""cursor:pointer"" onclick=""showConfirm1(" + e.Row.RowIndex.ToString + ")"">" + "מחק" + "</a>"
-
-        'End If
     End Sub
     'הוספת חבר חדש
     Public Sub btnAddPerson_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         DivAddPerson.Visible = True
         btnAdd.Visible = False
     End Sub
+    'פרוצדורת עדכון הוספת חבר חדש
     Public Sub updatePerson_Click(sender As Object, e As EventArgs)
         Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
         Dim con As New SqlConnection(strConnString)
@@ -301,7 +375,23 @@ Public Class Home
     Public Sub closeViewDeatails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         GridPersonDetails.EditIndex = -1
         GridPersonDetails.Visible = False
+        GridCovidDetails.Visible = False
         closeViewDeatails.Visible = False
+        closeViewCovidDeatails.Visible = False
+        openViewCovidDeatails.Visible = False
     End Sub
+    'סגירת חלון פרטי קורונה
+    Public Sub closeViewCovidDeatails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
 
+        GridCovidDetails.Visible = False
+        closeViewCovidDeatails.Visible = False
+        openViewCovidDeatails.Visible = True
+    End Sub
+    ' פתיחת חלון פרטי קורונה
+    Public Sub openViewCovidDeatails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+
+        GridCovidDetails.Visible = True
+        closeViewCovidDeatails.Visible = True
+        openViewCovidDeatails.Visible = False
+    End Sub
 End Class
