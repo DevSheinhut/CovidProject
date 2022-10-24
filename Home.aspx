@@ -7,6 +7,15 @@
     <link href="CSS/StylePage.css" rel="stylesheet" />
     <title class="title">ברוכים הבאים לקופת חולים..</title>
     <script type="text/javascript">
+        $(document).ready(function () {
+            pageLoad();
+        };
+        function pageLoad() {
+            
+            document.getElementById("btnDetail").click();
+        };
+
+
         function detail_onclick(row) {
             //debugger;
             //GridPeople.EditIndex = row.id
@@ -20,7 +29,12 @@
 <body>
     <form id="form1" runat="server">
         <div class="mainDiv" >
-           <div class="txt">קופת חולים ברוכים הבאים</div>
+           <div style="display: flex;margin-right: 38%;"><div class="txt">קופת חולים ברוכים הבאים</div>
+               <div style="margin-right: 54%;margin-top: 2%;">מס חברים שאינם מחוסנים כלל
+                     <span id="msgSum"></span>
+                     <div id="sumUnVac" style="color:red;font: bold 45px/57px Assistant;margin-right: 52%;" runat="server" ></div>
+                 </div>
+           </div>
              <div style="display: flex" >
                   <asp:LinkButton ID="btnAdd" Class="btnLink" runat="server" Visible="false" OnClick="btnAddPerson_Click" Text="הוספת חבר"></asp:LinkButton> 
             <div class="addPerson" id="DivAddPerson" style="display: flex; margin-top: 8px;"  runat="server">
@@ -35,7 +49,7 @@
              &nbsp;	&nbsp;
                   <asp:Button ID="updatePerson" Text="הוספה" runat="server" OnClick="updatePerson_Click" />
             </div>
-                 </div>
+                  </div>
             <div id="msg" style="color:red;" runat="server" visible="false">נא למלאות את כל הנתונים</div>
            
            
@@ -83,7 +97,7 @@
                         <asp:CommandField  ShowEditButton="True" ButtonType="Link" EditText="ערוך" HeaderText="ערוך" />
                     </Columns>
                  </asp:GridView>
-                   <br /> <br />
+                    <br />  <br />
                  <asp:LinkButton ID="closeViewCovidDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="closeViewCovidDeatails_Click" Text="סגור פרטי קורונה"></asp:LinkButton>
                      <asp:LinkButton ID="openViewCovidDeatails" style="color: #102C2F;" runat="server" Visible="false"  OnClick="openViewCovidDeatails_Click" Text="פתיחת פרטי קורונה"></asp:LinkButton>       
                 <asp:GridView class="DivGridCovidDetails" ID="GridCovidDetails" Visible="false" Style="width: 100%;" runat="server"
@@ -96,11 +110,57 @@
                     <RowStyle Height="40px" />
                     <Columns>
                         <asp:CommandField  ShowEditButton="True" ButtonType="Link" EditText="ערוך" HeaderText="ערוך" />
-                        
+                        <%-- 
+                                                    <asp:TemplateField HeaderText="id">
+                                                    <ItemTemplate>
+
+                                                          <%#Eval("id")%>
+
+                                                    </ItemTemplate>
+                                                    <ItemStyle  Width="7%" />
+                                                </asp:TemplateField>
+
+                                                <asp:TemplateField HeaderText="שם">
+                                                    <ItemTemplate >
+                                                        <%#Eval("first_name")%>
+                                                    </ItemTemplate>
+                                                    <ItemStyle  Width="7%" />
+                                                    <EditItemTemplate>
+                                                        <asp:TextBox Width="100%" Height="40px" ID="first_nameC" runat="server" MaxLength="60" Text='<%#Eval("first_name") %>'></asp:TextBox>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateField>
+                            
+                                                <asp:TemplateField HeaderText="משפחה">
+                                                    <ItemTemplate >
+                                                        <%#Eval("last_name")%>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <asp:TextBox Width="100%" Height="40px" ID="last_nameC" runat="server" MaxLength="60" Text='<%#Eval("last_name") %>'></asp:TextBox>
+                                                    </EditItemTemplate>
+                                                </asp:TemplateField>
+                         <asp:TemplateField Visible="false" HeaderText="ת.ז.">
+                                                    <ItemTemplate>
+
+                                                          <%#Eval("identification")%>
+
+                                                    </ItemTemplate>
+                                                    <ItemStyle  Width="7%" />
+
+                                                </asp:TemplateField>
+                           <asp:TemplateField Visible="false" HeaderText="כתובת">
+                                                    <ItemTemplate>
+
+                                                          <%#Eval("address")%>
+
+                                                    </ItemTemplate>
+                                                    <ItemStyle  Width="7%" />
+
+                                                </asp:TemplateField> --%>
                     </Columns>
                 </asp:GridView>
 
             </div>
+                 <asp:HiddenField ID="isRowId" runat="server" />
                 </div>
         </div>
     </form>

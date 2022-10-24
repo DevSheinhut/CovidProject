@@ -492,6 +492,15 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
+<member name="F:CovidProject.Home._sumUnVac">
+<summary>
+sumUnVac control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
 <member name="F:CovidProject.Home._btnAdd">
 <summary>
 btnAdd control.
@@ -630,6 +639,15 @@ To modify move field declaration from designer file to code-behind file.
 <member name="F:CovidProject.Home._GridCovidDetails">
 <summary>
 GridCovidDetails control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:CovidProject.Home._isRowId">
+<summary>
+isRowId control.
 </summary>
 <remarks>
 Auto-generated field.

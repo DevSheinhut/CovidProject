@@ -6,13 +6,14 @@ Public Class Home
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
+        sum_Un_Vac()
     End Sub
+
     Public Sub btnViewListPeople_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-        If GridPeople.Visible = True Then
-            GridPeople.Visible = False
-            Exit Sub
-        End If
+        'If GridPeople.Visible = True Then
+        '    GridPeople.Visible = False
+        '    Exit Sub
+        'End If
         GridPeople.Visible = True
         Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
         Dim con As New SqlConnection(strConnString)
@@ -78,6 +79,7 @@ Public Class Home
             '    f.Attributes.Add("onclick", "detail_onclick(this)")
             '    GridPeople.Rows(i).Cells(6).Controls.Add(f)
         Next
+        sum_Un_Vac()
     End Sub
     Private Sub InitGridPersonDetails()
         ' GridPeople.Visible = True
@@ -92,7 +94,7 @@ Public Class Home
 
         con.Open()
         cmd.CommandType = CommandType.StoredProcedure
-        cmd.Parameters.AddWithValue("@id", GridPersonDetails.EditIndex)
+        cmd.Parameters.AddWithValue("@id", isRowId.Value)
         da.SelectCommand = cmd
         dt.Clear()
         da.Fill(dt)
@@ -134,25 +136,25 @@ Public Class Home
 
             Dim index = 0
             NEW_ROW = grid_people.NewRow()
-                grid_people.Rows.Add(NEW_ROW)
-                grid_people.Rows(index)(0) = tbl.Rows(index)("id")
-                grid_people.Rows(index)(1) = tbl.Rows(index)("person_id")
-                grid_people.Rows(index)(2) = tbl.Rows(index)("first_name")
-                grid_people.Rows(index)(3) = tbl.Rows(index)("last_name")
-                grid_people.Rows(index)(4) = tbl.Rows(index)("identification")
-                grid_people.Rows(index)(5) = tbl.Rows(index)("address")
-                grid_people.Rows(index)(6) = tbl.Rows(index)("birth_date")
-                grid_people.Rows(index)(7) = tbl.Rows(index)("telephone")
-                grid_people.Rows(index)(8) = tbl.Rows(index)("phone")
-                grid_people.Rows(index)(9) = tbl.Rows(index)("חיסון")
-                grid_people.Rows(index)(10) = tbl.Rows(index)("תאריך")
-                grid_people.Rows(index)(11) = tbl.Rows(index)("יצרן")
-                grid_people.Rows(index)(12) = tbl.Rows(index)("date_positive")
-                grid_people.Rows(index)(13) = tbl.Rows(index)("date_recovery")
+            grid_people.Rows.Add(NEW_ROW)
+            grid_people.Rows(index)(0) = tbl.Rows(index)("id")
+            grid_people.Rows(index)(1) = tbl.Rows(index)("person_id")
+            grid_people.Rows(index)(2) = tbl.Rows(index)("first_name")
+            grid_people.Rows(index)(3) = tbl.Rows(index)("last_name")
+            grid_people.Rows(index)(4) = tbl.Rows(index)("identification")
+            grid_people.Rows(index)(5) = tbl.Rows(index)("address")
+            grid_people.Rows(index)(6) = tbl.Rows(index)("birth_date")
+            grid_people.Rows(index)(7) = tbl.Rows(index)("telephone")
+            grid_people.Rows(index)(8) = tbl.Rows(index)("phone")
+            grid_people.Rows(index)(9) = tbl.Rows(index)("חיסון")
+            grid_people.Rows(index)(10) = tbl.Rows(index)("תאריך")
+            grid_people.Rows(index)(11) = tbl.Rows(index)("יצרן")
+            grid_people.Rows(index)(12) = tbl.Rows(index)("date_positive")
+            grid_people.Rows(index)(13) = tbl.Rows(index)("date_recovery")
 
 
         End If
-
+        ViewState("CurrentTable1") = grid_people
         GridPersonDetails.DataSource = grid_people
 
         GridPersonDetails.DataBind()
@@ -209,7 +211,7 @@ Public Class Home
 
             Next
         End If
-
+        ViewState("CurrentTable2") = grid_covid
         GridCovidDetails.DataSource = grid_covid
 
         GridCovidDetails.DataBind()
@@ -231,11 +233,11 @@ Public Class Home
 
     'לא בשימוש היה עבור ערוך בטבלת חברים
     Protected Sub GridPeople_RowEditing(sender As Object, e As GridViewEditEventArgs)
-        Dim dtCurrentTable As DataTable = ViewState("CurrentTable")
-        GridPeople.EditIndex = dtCurrentTable.Rows(e.NewEditIndex)("ID")
+        'Dim dtCurrentTable As DataTable = ViewState("CurrentTable")
+        'GridPeople.EditIndex = dtCurrentTable.Rows(e.NewEditIndex)("ID")
 
 
-        InitGridPersonDetails()
+        'InitGridPersonDetails()
         'לרשום פה פרוצדורה שיכניס את הערכים המעודכנים למסד נתונים
     End Sub
     'מחיקת חבר
@@ -257,20 +259,16 @@ Public Class Home
         dt.Clear()
         da.Fill(dt)
         btnViewListPeople_Click(sender, e)
-
+        sum_Un_Vac()
     End Sub
     ' עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowEditing(sender As Object, e As GridViewEditEventArgs)
         GridPersonDetails.EditIndex = e.NewEditIndex
-
-
     End Sub
     'ביטול עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
-
         GridPersonDetails.EditIndex = -1
         InitGridPersonDetails()
-        'GridPersonDetails.EditIndex = -1
     End Sub
     'עדכון עריכת פרטים אישיים
     Protected Sub GridPersonDetails_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
@@ -279,10 +277,23 @@ Public Class Home
         Dim cmd As New SqlCommand("Update_Person")
         Dim row As GridViewRow = GridPersonDetails.Rows(e.RowIndex)
 
+        Dim dtCurrentTable1 As DataTable = ViewState("CurrentTable1")
+        Dim id As Integer = dtCurrentTable1.Rows(e.RowIndex)("ID")
+
+        Dim newFname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("first_nameC"), System.Web.UI.WebControls.TextBox)
+        Dim newLname_txt As System.Web.UI.WebControls.TextBox = CType(row.FindControl("last_nameC"), System.Web.UI.WebControls.TextBox)
+        If newFname_txt.Text = "" Or newLname_txt.Text = "" Then
+            GridPersonDetails.EditIndex = -1
+            InitGridPersonDetails()
+            msg.Visible = True
+            Exit Sub
+        End If
         msg.Visible = False
         cmd.Connection = con
         cmd.CommandType = CommandType.StoredProcedure
-        cmd.Parameters.AddWithValue("@id", row)
+        cmd.Parameters.AddWithValue("@id", id)
+        cmd.Parameters.AddWithValue("@Fname", newFname_txt.Text)
+        cmd.Parameters.AddWithValue("@Lname", newLname_txt.Text)
         GridPersonDetails.EditIndex = -1
         InitGridPersonDetails()
 
@@ -303,9 +314,9 @@ Public Class Home
     Protected Sub GridCovidDetails_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
         Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
         Dim con As New SqlConnection(strConnString)
-        Dim cmd As New SqlCommand("Update_Person")
+        Dim cmd As New SqlCommand("Update_Covid")
         Dim row As GridViewRow = GridCovidDetails.Rows(e.RowIndex)
-
+        'לא סיימתי צריך לעשות פה כמו בפרוצדורת עדכון של פרטים אישיים
         msg.Visible = False
         cmd.Connection = con
         cmd.CommandType = CommandType.StoredProcedure
@@ -317,10 +328,8 @@ Public Class Home
     End Sub
     'בלחיצה על הצג יופיע טבלה עם פרטים אישיים
     Protected Sub View_Command(sender As Object, e As CommandEventArgs)
-        GridPersonDetails.EditIndex = e.CommandArgument
-
+        isRowId.Value = e.CommandArgument
         InitGridPersonDetails()
-
     End Sub
     Protected Sub GridPeople_RowDataBound(sender As Object, e As GridViewRowEventArgs)
 
@@ -338,8 +347,6 @@ Public Class Home
         Dim da As New SqlDataAdapter()
         Dim dt, tbl, tbl1 As New DataTable
         Dim person_id As Integer
-
-
         con.Open()
         cmd.CommandType = CommandType.StoredProcedure
         da.SelectCommand = cmd
@@ -369,7 +376,7 @@ Public Class Home
         txtId.Value = ""
         DivAddPerson.Visible = False
         btnAdd.Visible = True
-
+        sum_Un_Vac()
     End Sub
     'סגירת חלון פרטים נוספים
     Public Sub closeViewDeatails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -393,5 +400,23 @@ Public Class Home
         GridCovidDetails.Visible = True
         closeViewCovidDeatails.Visible = True
         openViewCovidDeatails.Visible = False
+    End Sub
+    'מספר מטופלים שאינם מחוסנים כלל
+
+    Public Sub sum_Un_Vac()
+
+        Dim strConnString As String = WebConfigurationManager.ConnectionStrings("COVID").ConnectionString
+        Dim con As New SqlConnection(strConnString)
+        Dim cmd As New SqlCommand("GetNumUnVac", con)
+        Dim da As New SqlDataAdapter()
+        Dim dt, tbl, tbl1 As New DataTable
+        Dim sum As Integer
+        con.Open()
+        cmd.CommandType = CommandType.StoredProcedure
+        da.SelectCommand = cmd
+        dt.Clear()
+        da.Fill(dt)
+        tbl = dt
+        sumUnVac.InnerHtml = tbl.Rows(0)("Column1")
     End Sub
 End Class

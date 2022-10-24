@@ -23,6 +23,15 @@ Partial Public Class Home
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
+    '''sumUnVac control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sumUnVac As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+
+    '''<summary>
     '''btnAdd control.
     '''</summary>
     '''<remarks>
@@ -165,4 +174,13 @@ Partial Public Class Home
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents GridCovidDetails As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''isRowId control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents isRowId As Global.System.Web.UI.WebControls.HiddenField
 End Class
